@@ -8,7 +8,10 @@
 
     $client = new Client("Ali", "ali@email.com");
 
-     $client = new Client("Mostapha", "mustafa@email.com");
+    $client = new Client("Mostapha", "mustafa@email.com");
+
+    $client = new Client("Mostapha", "mustafa10@email.com");
+
 
 
     $repository -> save($client);
