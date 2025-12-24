@@ -1,19 +1,35 @@
-<?php 
-    require_once __DIR__ . '/../config/database.php';
-    require_once __DIR__ . '/../src/Entity/client.php';
-    require_once __DIR__ . '/../src/Repository/ClientRepository.php';
+<?php
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../src/Entity/client.php';
+require_once __DIR__ . '/../src/Repository/ClientRepository.php';
 
-    //class dyal repository 3tinaha pdo lijabnah mn conexion m3a DB
-    $repository = new ClientRepository($pdo);
+//class dyal repository 3tinaha pdo lijabnah mn conexion m3a DB
+$clientRepository = new ClientRepository($pdo);
 
-    $client = new Client("Ali", "ali@email.com");
+// var_dump($clientRepository -> findAll());
 
-    $client = new Client("Mostapha", "mustafa@email.com");
+$clientsToAdd = [
+    new Client("Mostapha", "mustafa@email.com"),
+    new Client("Mostapha", "mustafa10@email.com"),
+    new Client("Layla", "layla@email.com"),
+    new Client("Lamine", "lamine@email.com"),
+    new Client("Ahmed", "ahmed@gmail.com"),
+    new Client("Amine", "amine@gmail.com")
+];
 
-    $client = new Client("Mostapha", "mustafa10@email.com");
+foreach($clientsToAdd as $client){
+    try{
+        $clientRepository -> save($client);
+        echo "Client ajoute";
+        echo "\n";
+    }catch(exception $e){
+        echo "Erreur : " . $e -> getMessage() . "<br>";
+    }
+}
 
+echo  "<br> === LISTE DES CLIENTS === <br>";
+$allClients = $clientRepository -> findAll();
+foreach($allClients as $client){
+    echo $client -> getNom() . " | " . $client -> getEmail() . "<br>";
+}
 
-
-    $repository -> save($client);
-
-    echo "Client ajoute avec succes". PHP_EOL;
