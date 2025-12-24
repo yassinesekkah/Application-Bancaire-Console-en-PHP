@@ -34,6 +34,7 @@ class ClientRepository
             ':email' => $email
         ]);
     }
+
     public function findAll(): array
     {
         $stmt = $this -> pdo -> query("SELECT * FROM clients");
@@ -49,6 +50,18 @@ class ClientRepository
             );
         }
         return $clients;
+    }
+
+    public function findById (int $id){
+        $stmt = $this -> pdo -> prepare ("SELECT * FROM clients WHERE id = ?");
+        $stmt -> execute([$id]);
+        $row = $stmt -> fetch(PDO::FETCH_ASSOC);
+
+        if($row){
+            return new Client($row['nom'], $row['email']);
+        }else{
+            return null;
+        }
     }
 
 }
