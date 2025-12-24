@@ -43,7 +43,14 @@ if (!$resFindById) {
 } else {
     echo $resFindById->getNom() . " | " . $resFindById->getEmail() . "<br>";
 }
-
+//update client
+echo "<br>=== UPDATE BY ID ===<br>";
+try{
+    $clientRepository -> updateClient(3, "Yassine", "yassine@email.com");
+    echo "Client mis à jour avec succès <br>";
+}catch(Exception $e){
+    echo "Erreur" . $e -> getMessage() . "<br>";
+}
 
 
 
