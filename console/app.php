@@ -16,7 +16,7 @@ $clientsToAdd = [
     new Client("Ahmed", "ahmed@gmail.com"),
     new Client("Amine", "amine@gmail.com")
 ];
-
+//save les clients sur le Database
 foreach($clientsToAdd as $client){
     try{
         $clientRepository -> save($client);
@@ -26,10 +26,24 @@ foreach($clientsToAdd as $client){
         echo "Erreur : " . $e -> getMessage() . "<br>";
     }
 }
-
+//Affichage des clients
 echo  "<br> === LISTE DES CLIENTS === <br>";
 $allClients = $clientRepository -> findAll();
+
 foreach($allClients as $client){
     echo $client -> getNom() . " | " . $client -> getEmail() . "<br>";
 }
+//Affichage de client avec le id 
+echo "<br>=== FIND BY ID ===<br>";
+
+$resFindById = $clientRepository->findById(2);
+
+if (!$resFindById) {
+    echo "There is no client with this id <br>";
+} else {
+    echo $resFindById->getNom() . " | " . $resFindById->getEmail() . "<br>";
+}
+
+
+
 

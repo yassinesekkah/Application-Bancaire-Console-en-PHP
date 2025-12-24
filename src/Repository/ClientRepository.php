@@ -6,7 +6,7 @@ class ClientRepository
 
     public function __construct(PDO $pdo)
     {
-        $this -> pdo = $pdo;
+        $this->pdo = $pdo;
     }
 
     public function isEmailUnique(string $email): bool
@@ -37,36 +37,26 @@ class ClientRepository
 
     public function findAll(): array
     {
-        $stmt = $this -> pdo -> query("SELECT * FROM clients");
-        $rows = $stmt ->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->pdo->query("SELECT * FROM clients");
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $clients = [];
-        $lenght = count($rows);
-        
-        for($i = 0; $i < $lenght; $i++){
-            $clients [] = new Client(
-                $rows[$i]['nom'],
-                $rows[$i]['email']
-            );
+        foreach ($rows as $row) {
+            $clients[] = new Client($row['nom'], $row['email']);
         }
         return $clients;
     }
 
-    public function findById (int $id){
-        $stmt = $this -> pdo -> prepare ("SELECT * FROM clients WHERE id = ?");
-        $stmt -> execute([$id]);
-        $row = $stmt -> fetch(PDO::FETCH_ASSOC);
+    public function findById(int $id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM clients WHERE id = ?");
+        $stmt->execute([$id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if($row){
+        if ($row) {
             return new Client($row['nom'], $row['email']);
-        }else{
+        } else {
             return null;
         }
     }
-
 }
-
-
-
-
-
