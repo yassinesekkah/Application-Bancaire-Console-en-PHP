@@ -59,4 +59,29 @@ class ClientRepository
             return null;
         }
     }
+
+    public function updateClient(int $id, string $newNom, string $newEmail)
+    {
+        //check
+        $client = $this->findById($id);
+        if (!$client) {
+            throw new Exception("Il n'existe pas de client avec cet id");
+        }
+
+        if (strlen($newNom) < 2) {
+            throw new InvalidArgumentException("le nom est tres court");
+        }
+        if($client -> getEmail() !== $newEmail){
+            $stmt = $this -> pdo -> prepare("SELECT count(*) FROM clients WHERE email = ? AND id != ?");
+            $stmt -> execute([$newEmail, $id]);
+            $count = $stmt -> fetchColumn();
+
+            if($count > 0 ){
+                throw new InvalidArgumentException("Cet email est déjà utilisé");
+            }
+        }
+        //update
+        $stmt = $this -> pdo -> prepare("UPDATE clients SET nom = ?, email = ? WHERE id = ?");
+        $stmt -> execute([$newNom, $newEmail, $id]);
+    }
 }
