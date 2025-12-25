@@ -2,9 +2,16 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../src/Entity/client.php';
 require_once __DIR__ . '/../src/Repository/ClientRepository.php';
+require_once __DIR__ . '/../src/Repository/CompteRepository.php';
+require_once __DIR__ . '/../src/Entity/compte.php';
+require_once __DIR__ . '/../src/Entity/CompteCourant.php';
+require_once __DIR__ . '/../src/Entity/compteEpargne.php';
+
+
 
 //class dyal repository 3tinaha pdo lijabnah mn conexion m3a DB
 $clientRepository = new ClientRepository($pdo);
+$compteRepository = new CompteRepository($pdo, $clientRepository);
 
 // var_dump($clientRepository -> findAll());
 
@@ -60,5 +67,11 @@ try{
 catch(Exception $e){
     echo "Erreur" . $e -> getMessage() . "<br>";
 }
+
+
+
+
+
+
 
 

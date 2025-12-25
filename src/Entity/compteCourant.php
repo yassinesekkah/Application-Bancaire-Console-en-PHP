@@ -1,6 +1,6 @@
 <?php
 
-class compteCourant extends Compte
+class CompteCourant extends Compte
 {
     private float $fees = 5;
 
@@ -9,7 +9,6 @@ class compteCourant extends Compte
         if (!is_numeric($amount) || $amount <= 0) {
             throw new InvalidArgumentException("Le montant doit être positif et numérique");
         }
-
 
         $soldeAvant = $this->getSolde();
         $soldeApres = $soldeAvant + $amount - $this->fees;

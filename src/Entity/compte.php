@@ -8,7 +8,7 @@ abstract class Compte
 
     public function __construct(float $solde, int $clientId)
     {
-        $this -> id = null;
+        
         $this -> solde = $solde;
         $this -> clientId = $clientId;
     }
@@ -31,8 +31,6 @@ abstract class Compte
     {
         return $this -> solde = $amount;
     }
-
-
 
     //abstract methods
     abstract public function deposit (float $amount): void;
