@@ -51,6 +51,14 @@ try{
 }catch(Exception $e){
     echo "Erreur" . $e -> getMessage() . "<br>";
 }
-
+//////delete client
+echo "<br>=== DELETE BY ID ===<br>";
+try{
+    $clientRepository -> deleteClient(7);
+    echo "Client supprime avec succès <br>";
+}
+catch(Exception $e){
+    echo "Erreur" . $e -> getMessage() . "<br>";
+}
 
 

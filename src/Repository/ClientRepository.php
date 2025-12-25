@@ -84,4 +84,27 @@ class ClientRepository
         $stmt = $this -> pdo -> prepare("UPDATE clients SET nom = ?, email = ? WHERE id = ?");
         $stmt -> execute([$newNom, $newEmail, $id]);
     }
+
+    public function deleteClient (int $id){
+
+        $client = $this -> findById($id);
+
+        if(!$client){
+            throw new InvalidArgumentException("Il n'existe pas de client avec cet id");
+        }
+
+        $stmt = $this -> pdo -> prepare("SELECT count(*) FROM compte WHERE client_id = ?");
+        $stmt -> execute([$id]);
+        $count = $stmt -> fetchColumn();
+
+        if($count > 0){
+            throw new InvalidArgumentException("Impossible de supprimer ce client, 
+                                    il possède déjà un compte bancaire");
+        }
+
+        //delete
+        $stmt = $this -> pdo -> prepare("DELETE FROM clients WHERE id = ?");
+        $stmt -> execute([$id]);
+        
+    }
 }
