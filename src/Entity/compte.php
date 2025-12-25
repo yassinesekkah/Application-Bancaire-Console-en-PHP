@@ -2,18 +2,18 @@
 
 abstract class Compte 
 {
-    private int $id;
+    private ?int $id;
     private float $solde;
     private int $clientId;
 
-    public function __construct(int $id, float $solde, int $clientId)
+    public function __construct(float $solde, int $clientId)
     {
-        $this -> id = $id;
+        $this -> id = null;
         $this -> solde = $solde;
         $this -> clientId = $clientId;
     }
 
-    public function getID(): int
+    public function getID(): ?int
     {
         return $this -> id;
     }
@@ -27,6 +27,12 @@ abstract class Compte
     {
          return $this -> clientId;
     }
+    public function setSolde($amount): float
+    {
+        return $this -> solde = $amount;
+    }
+
+
 
     //abstract methods
     abstract public function deposit (float $amount): void;
