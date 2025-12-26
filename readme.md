@@ -17,28 +17,6 @@ Architecture Repository
 
 Console (CLI)
 
-📁 Structure du projet
-Application-Bancaire-Console-en-PHP/
-│
-├── config/
-│   └── database.php
-│
-├── src/
-│   ├── Entity/
-│   │   ├── Client.php
-│   │   ├── Compte.php        (abstract)
-│   │   ├── CompteCourant.php
-│   │   └── CompteEpargne.php
-│   │
-│   └── Repository/
-│       ├── ClientRepository.php
-│       └── CompteRepository.php
-│
-├── console/
-│   └── app.php
-│
-└── README.md
-
 👤 Gestion des clients (US implémentées)
 ✔ Ajouter un client
 
