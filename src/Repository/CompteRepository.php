@@ -11,7 +11,7 @@ class CompteRepository
         $this->clientRepo = $clientRepo;
     }
 
-    public function createAccount(int $clientId,string $accountType)
+    public function createAccount(int $clientId,string $accountType) 
     {
         $client = $this->clientRepo->findById($clientId);
 
@@ -31,12 +31,23 @@ class CompteRepository
             'client_id' => $clientId
         ]);
 
+        $accountId = $this -> pdo -> lastInsertId();
         //return 3la hsab type dyal compte 
         if($accountType === 'courant'){
-            return new CompteCourant(0, $clientId);
+            return new CompteCourant($accountId, 0, $clientId);
         }
         else{
-            return new CompteEpargne(0, $clientId);
+            return new CompteEpargne($accountId, 0, $clientId);
         }
     }
+
+    public function updateSolde (Compte $compte)
+    {
+        $stmt = $this -> pdo -> prepare("UPDATE compte SET solde = :solde WHERE id = :id");
+        $stmt -> execute([
+            'solde' => $compte -> getSolde(),
+            'id' => $compte -> getId()
+        ]);
+    }
+    
 }

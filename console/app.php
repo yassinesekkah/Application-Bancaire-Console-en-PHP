@@ -69,6 +69,29 @@ catch(Exception $e){
 }
 
 
+////Ajouter un compte
+echo "<br>=== Ajoutter UN COMPTE ===<br>";
+
+try{
+    $compte = $compteRepository -> createAccount(3, "courant");
+    $compte -> deposit(500);
+    $compteRepository -> updateSolde($compte);
+    $compte -> withdraw(100);
+    $compteRepository -> updateSolde($compte);
+
+    $compte2 = $compteRepository -> createAccount(6, "epargne");
+    $compte2 -> deposit(800);
+    $compteRepository -> updateSolde($compte2);
+
+    $compte2 -> withdraw(400);
+    $compteRepository -> updateSolde($compte2);
+
+
+}catch(Exception $e){
+    echo "Erreur" . $e ->getMessage("Erreur");
+}
+
+var_dump($compte);
 
 
 

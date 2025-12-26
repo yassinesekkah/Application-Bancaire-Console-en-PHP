@@ -30,6 +30,6 @@ class CompteEpargne extends Compte
         $soldeApres = $soldeAvant - $amount;
 
         $this -> setSolde($soldeApres);
-         echo "Retrait : $amount DH, Nouveau solde : $soldeApres DH <br>";
+        echo "Retrait : $amount DH, Nouveau solde : $soldeApres DH <br>";
     }
 }
