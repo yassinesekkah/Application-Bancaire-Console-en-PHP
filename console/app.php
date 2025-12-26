@@ -91,6 +91,15 @@ try{
     echo "Erreur" . $e ->getMessage();
 }
 
+echo "<br> === LISTE DES CLIENTS === <br>";
+
+$allAccounts = $compteRepository->findAll();
+
+foreach($allAccounts as $account) {
+    echo "Client ID: " . $account->getClientId() . " | ";
+    echo "Type: " . ($account instanceof CompteCourant ? 'Courant' : 'Epargne') . " | ";
+    echo "Solde: " . $account->getSolde() . " DH <br>" ;
+}
 
 
 

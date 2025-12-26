@@ -33,8 +33,8 @@ class CompteRepository
                 "Type de compte invalide, entrez 'courant' ou 'epargne'"
             );
         }
-        if($accountType == 'courant' && $this -> clientHasCourant($clientId)){
-           throw new Exception("Ce client possède déjà un compte courant");
+        if ($accountType == 'courant' && $this->clientHasCourant($clientId)) {
+            throw new Exception("Ce client possède déjà un compte courant");
         }
 
         $stmt = $this->pdo->prepare(
@@ -62,5 +62,21 @@ class CompteRepository
             'solde' => $compte->getSolde(),
             'id' => $compte->getId()
         ]);
+    }
+
+    public function findAll(): array
+    {
+        $stmt = $this->pdo->query("SELECT * FROM compte");
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $accounts = [];
+        foreach ($rows as $row) {
+            if ($row['type'] === 'courant') {
+                $accounts[] = new CompteCourant((int)$row['id'], (float)$row['solde'], (int)$row['client_id']);
+            } else {
+                $accounts[] = new CompteEpargne((int)$row['id'], (float)$row['solde'], (int)$row['client_id']);
+            }
+        }
+        return $accounts;
     }
 }
