@@ -101,6 +101,15 @@ foreach($allAccounts as $account) {
     echo "Solde: " . $account->getSolde() . " DH <br>" ;
 }
 
+echo "<br>=== FIND COMPTE BY ID ===<br>";
+ $clientAccounts = $compteRepository -> findByClientId(6);
+
+ foreach ($clientAccounts as $account){
+    echo "Client ID: " . $account -> getClientId() . " | ";
+    echo "Type: " .  ($account instanceof CompteCourant ? 'Courant' : 'Epargne') . " | ";
+    echo "Solde: " . $account -> getSolde() . " DH <br>";
+ }
+
 
 
 

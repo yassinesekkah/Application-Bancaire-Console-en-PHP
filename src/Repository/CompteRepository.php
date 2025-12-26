@@ -79,4 +79,26 @@ class CompteRepository
         }
         return $accounts;
     }
+
+    public function findByClientId(int $clientId): array
+    {
+        $client = $this -> clientRepo -> findById($clientId);
+        if(!$client){
+            throw new InvalidArgumentException("Il n'existe pas de client avec cet identifiant");
+        }
+
+        $stmt = $this -> pdo -> prepare("SELECT * FROM compte WHERE client_id = ?");
+        $stmt -> execute ([$clientId]);
+        $rows = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+
+        $clientAccounts = [];
+        foreach($rows as $row){
+            if($row['type'] === 'courant'){
+                $clientAccounts [] = new CompteCourant((int)$row['id'], (float)$row['solde'], (int)$row['client_id']);
+            } else{
+                $clientAccounts [] = new CompteEpargne((int)$row['id'], (float)$row['solde'], (int)$row['client_id']);
+            }
+        }
+        return $clientAccounts;
+    }
 }
