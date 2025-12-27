@@ -110,6 +110,17 @@ echo "<br>=== FIND COMPTE BY ID ===<br>";
     echo "Solde: " . $account -> getSolde() . " DH <br>";
  }
 
+ echo "<br>=== DELETE ACCOUNT BY ID ===<br>";
+try{
+    $compteRepository -> deleteCompte(1);
+    echo "Compte supprime avec succès <br>";
+
+}catch(Exception $e){
+    echo "erreur " . $e -> getMessage();
+}
+
+
+
 
 
 

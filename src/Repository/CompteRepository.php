@@ -101,4 +101,23 @@ class CompteRepository
         }
         return $clientAccounts;
     }
+
+    public function deleteCompte(int $accountId): void
+    {
+        $stmt = $this -> pdo -> prepare ("SELECT solde FROM compte WHERE id = :id");
+        $stmt -> execute(["id" => $accountId]);
+        $account = $stmt -> fetch(PDO::FETCH_ASSOC);
+        if(!$account){
+            throw new InvalidArgumentException("Ce compte n'existe pas");
+        }
+
+        if((float)$account['solde'] !== 0.0){
+            throw new InvalidArgumentException("Ce compte possède un solde. Il ne peut pas être supprimé");
+        }
+        //delete daba wila banet chi if nzido mn ba3d
+        $stmt = $this -> pdo -> prepare ("DELETE FROM compte WHERE id = :id");
+        $stmt -> execute ([
+            "id" => $accountId]);
+
+    }
 }
