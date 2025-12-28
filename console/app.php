@@ -33,14 +33,16 @@ foreach ($clientsToAdd as $client) {
         echo "Erreur : " . $e->getMessage() . "<br>";
     }
 }
-//Affichage des clients
+////===============================> Affichage des clients <==============================================////
+
 echo  "<br> === LISTE DES CLIENTS === <br>";
 $allClients = $clientRepository->findAll();
 
 foreach ($allClients as $client) {
     echo $client->getNom() . " | " . $client->getEmail() . "<br>";
 }
-//Affichage de client avec le id 
+////============================> Affichage de client avec le id <=========================================////
+
 echo "<br>=== FIND BY ID ===<br>";
 
 $resFindById = $clientRepository->findById(2);
@@ -97,8 +99,9 @@ foreach ($allAccounts as $account) {
     echo "Type: " . ($account instanceof CompteCourant ? 'Courant' : 'Epargne') . " | ";
     echo "Solde: " . $account->getSolde() . " DH <br>";
 }
+////===============================> trouver Compte Par Id <==========================================////
 
-echo "<br>=== FIND COMPTE BY ID ===<br>";
+echo "<br>=== trouver Compte Par Id ===<br>";
 $clientAccounts = $compteRepository->findByClientId(6);
 
 foreach ($clientAccounts as $account) {
