@@ -7,6 +7,8 @@ require_once __DIR__ . '/../src/Entity/compte.php';
 require_once __DIR__ . '/../src/Entity/CompteCourant.php';
 require_once __DIR__ . '/../src/Entity/compteEpargne.php';
 require_once __DIR__ . '/../src/factory/compteFactory.php';
+require_once __DIR__ . '/../src/Entity/Transaction.php';
+require_once __DIR__ . '/../src/Repository/TransactionRepository.php';
 
 
 //class dyal repository 3tinaha pdo lijabnah mn conexion m3a DB
@@ -117,3 +119,5 @@ try {
 } catch (Exception $e) {
     echo "erreur " . $e->getMessage();
 }
+
+

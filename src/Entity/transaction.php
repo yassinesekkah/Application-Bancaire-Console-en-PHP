@@ -43,7 +43,7 @@ class Transaction
     {
         return $this -> amount;
     }
-    public function getCreatAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this -> creatAt;
     }
