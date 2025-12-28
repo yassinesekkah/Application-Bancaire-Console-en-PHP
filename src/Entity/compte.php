@@ -6,10 +6,9 @@ abstract class Compte
     private float $solde;
     private int $clientId;
 
-    public function __construct(int $id, float $solde, int $clientId)
+    public function __construct(int $clientId)
     {
-        $this -> id = $id;
-        $this -> solde = $solde;
+        $this -> solde = 0;
         $this -> clientId = $clientId;
     }
 
