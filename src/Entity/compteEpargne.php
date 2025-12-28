@@ -32,4 +32,8 @@ class CompteEpargne extends Compte
         $this -> setSolde($soldeApres);
         echo "Retrait : $amount DH, Nouveau solde : $soldeApres DH <br>";
     }
+    public function getType(): string
+    {
+        return 'epargne';
+    }
 }

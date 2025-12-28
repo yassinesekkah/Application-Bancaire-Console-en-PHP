@@ -2,7 +2,7 @@
 
 class CompteFactory
 {
-    static public function creatCompte (int $clientId, string $accountType): Compte
+    static public function CreatCompte (int $clientId, string $accountType): Compte
     {
         if($accountType === "courant"){
             $compte = new CompteCourant($clientId);

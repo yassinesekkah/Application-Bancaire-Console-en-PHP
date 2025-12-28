@@ -30,8 +30,13 @@ abstract class Compte
     {
         return $this -> solde = $amount;
     }
+    public function setID($id): void
+    {
+        $this -> id = $id;
+    }
 
     //abstract methods
     abstract public function deposit (float $amount): void;
     abstract public function withdraw (float $amount): void;
+    abstract public function getType(): string;
 }

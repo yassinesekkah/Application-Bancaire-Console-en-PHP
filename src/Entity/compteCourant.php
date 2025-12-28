@@ -35,4 +35,8 @@ class CompteCourant extends Compte
 
         echo "Retrait : $amount DH, Nouveau solde : $soldeApres DH <br>";
     }
+    public function getType(): string
+    {
+        return 'courant';
+    }
 }

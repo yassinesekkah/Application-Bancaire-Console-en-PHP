@@ -21,39 +21,21 @@ class CompteRepository
         return $stmt->fetchColumn() > 0;
     }
 
-    // public function createAccount(int $clientId, string $accountType): Compte
-    // {
-    //     $client = $this->clientRepo->findById($clientId);
-    //     if (!$client) {
-    //         throw new Exception("Il n'existe pas de client avec cet id");
-    //     }
+    public function saveAccount(Compte $compte): void
+    {
+        $stmt = $this->pdo->prepare(
+            "INSERT INTO compte (solde, type, client_id) VALUES (:solde, :type, :client_id)"
+        );
+        $stmt->execute([
+            'solde'     => $compte -> getSolde(),
+            'type'      => $compte -> getType(),
+            'client_id' => $compte -> getClientId()
+        ]);
 
-    //     if ($accountType !== 'courant' && $accountType !== 'epargne') {
-    //         throw new InvalidArgumentException(
-    //             "Type de compte invalide, entrez 'courant' ou 'epargne'"
-    //         );
-    //     }
-    //     if ($accountType == 'courant' && $this->clientHasCourant($clientId)) {
-    //         throw new Exception("Ce client possède déjà un compte courant");
-    //     }
+        $accountId = (int) $this->pdo->lastInsertId();
 
-    //     $stmt = $this->pdo->prepare(
-    //         "INSERT INTO compte (solde, type, client_id) VALUES (:solde, :type, :client_id)"
-    //     );
-    //     $stmt->execute([
-    //         'solde'     => 0,
-    //         'type'      => $accountType,
-    //         'client_id' => $clientId
-    //     ]);
-
-    //     $accountId = (int) $this->pdo->lastInsertId();
-
-    //     if ($accountType === 'courant') {
-    //         return new CompteCourant($accountId, 0, $clientId);
-    //     } else {
-    //         return new CompteEpargne($accountId, 0, $clientId);
-    //     }
-    // }
+        $compte -> setID($accountId);
+    }
 
     public function updateSolde(Compte $compte)
     {
