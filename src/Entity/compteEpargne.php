@@ -4,34 +4,23 @@ class CompteEpargne extends Compte
 {
     public function deposit(float $amount): void
     {
-        if (!is_numeric($amount) || $amount <= 0) {
-            throw new InvalidArgumentException("Le montant doit être positif et numérique");
+        if ($amount <= 0) {
+            throw new InvalidArgumentException("Le montant doit être positif ");
         }
-        $soldeAvant = $this->getSolde();
-
-        $soldeApres = $soldeAvant + $amount;
-
-        $this->setSolde($soldeApres);
-
-        echo "Dépôt : $amount DH, Nouveau solde: $soldeApres DH <br>";
+        $this -> solde += $amount;
     }
 
     public function withdraw(float $amount): void
     {
-        if (!is_numeric($amount) || $amount <= 0) {
-            throw new InvalidArgumentException("Le montant doit être positif et numérique");
+        if ($amount <= 0) {
+            throw new InvalidArgumentException("Le montant doit être positif ");
         }
-        //hna makayench l9adia dyal ti7 3la 0 donc khdam wsafi 
-        $soldeAvant = $this -> getSolde();
-
-        if($amount > $soldeAvant){
-            throw new InvalidArgumentException("Impossible de retirer $amount DH, solde disponible : $soldeAvant DH");
+        if ($this -> solde < $amount){
+            throw new RuntimeException("Solde insuffisant");
         }
-        $soldeApres = $soldeAvant - $amount;
-
-        $this -> setSolde($soldeApres);
-        echo "Retrait : $amount DH, Nouveau solde : $soldeApres DH <br>";
+        $this -> solde -= $amount;
     }
+
     public function getType(): string
     {
         return 'epargne';

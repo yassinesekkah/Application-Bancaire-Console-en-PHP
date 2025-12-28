@@ -2,13 +2,12 @@
 
 abstract class Compte 
 {
-    private ?int $id;
-    private float $solde;
+    private ?int $id = null;
+    protected float $solde = 0;
     private int $clientId;
 
     public function __construct(int $clientId)
-    {
-        $this -> solde = 0;
+    {   
         $this -> clientId = $clientId;
     }
 
@@ -26,10 +25,7 @@ abstract class Compte
     {
          return $this -> clientId;
     }
-    public function setSolde($amount): float
-    {
-        return $this -> solde = $amount;
-    }
+    
     public function setID($id): void
     {
         $this -> id = $id;
