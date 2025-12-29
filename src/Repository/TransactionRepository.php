@@ -17,7 +17,7 @@ class TransactionRepository
         $stmt->execute([
             'type'      => $transaction->getType(),
             'montant'   => $transaction->getAmount(),
-            'date'      => $transaction->getCreatedAt()->format('Y-m-d H:i:s'),,
+            'date'      => $transaction->getCreatedAt()->format('Y-m-d H:i:s'),
             'compte_id' => $transaction->getCompteId()
         ]);
 
@@ -27,7 +27,7 @@ class TransactionRepository
 
     public function findByCompteId($compteId)
     {
-        $stmt = $this->pdo->prepare("SELECT id, TYPE, montant, date, compte_id FROM transaction WHERE compte_id = :compte_id");
+        $stmt = $this->pdo->prepare("SELECT id, type, montant, date, compte_id FROM transaction WHERE compte_id = :compte_id");
         $stmt->execute([
             'compte_id' => $compteId
         ]);

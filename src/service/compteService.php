@@ -45,4 +45,46 @@ class CompteService
             throw $e;
         }
     }
+
+    public function retirer(int $compteId, float $amount): void
+    {
+        try {
+            $this->pdo->beginTransaction();
+
+            $compte = $this->compteRepo->findById($compteId);
+            if (!$compte) {
+                throw new Exception("Compte introuvable");
+            }
+
+            // Logique métier
+            $compte->withdraw($amount);
+
+            // Mise à jour du solde
+            $this->compteRepo->updateSolde($compte);
+
+            // Enregistrement de la transaction
+            $transaction = new Transaction(
+                $compte->getId(),
+                'withdraw',
+                $amount
+            );
+            $this->transactionRepo->save($transaction);
+
+            $this->pdo->commit();
+
+        } catch (Exception $e) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
+    }
+
+    public function historique(int $compteId): array
+    {
+        $compte = $this->compteRepo->findById($compteId);
+        if (!$compte) {
+            throw new Exception("Compte introuvable");
+        }
+
+        return $this->transactionRepo->findByCompteId($compteId);
+    }
 }

@@ -9,11 +9,21 @@ require_once __DIR__ . '/../src/Entity/compteEpargne.php';
 require_once __DIR__ . '/../src/factory/compteFactory.php';
 require_once __DIR__ . '/../src/Entity/Transaction.php';
 require_once __DIR__ . '/../src/Repository/TransactionRepository.php';
+require_once __DIR__ . '/../src/Service/CompteService.php';
+
 
 
 //class dyal repository 3tinaha pdo lijabnah mn conexion m3a DB
 $clientRepository = new ClientRepository($pdo);
 $compteRepository = new CompteRepository($pdo, $clientRepository);
+$transactionRepository = new TransactionRepository($pdo); 
+
+// service dyal compte (hiya li katdkhl f logique dyal depot / retrait)
+$compteService = new CompteService(
+    $pdo,
+    $compteRepository,
+    $transactionRepository
+);
 
 // var_dump($clientRepository -> findAll());
 
@@ -111,6 +121,7 @@ foreach ($clientAccounts as $account) {
     echo "Type: " .  ($account instanceof CompteCourant ? 'Courant' : 'Epargne') . " | ";
     echo "Solde: " . $account->getSolde() . " DH <br>";
 }
+////===============================> Supprimer Compte Par Id <==========================================////
 
 echo "<br>=== DELETE ACCOUNT BY ID ===<br>";
 try {
@@ -119,5 +130,46 @@ try {
 } catch (Exception $e) {
     echo "erreur " . $e->getMessage();
 }
+////===============================> depot  <==========================================////
+
+echo "<br>=== TEST DEPOT SERVICE ===<br>";
+
+try {
+    // hna kan3ayto ghi l service
+    // app.php ma kat3raf la solde la type la transaction
+    $compteService->deposer(2, 200);
+
+    echo "Depot effectue avec succes <br>";
+} catch (Exception $e) {
+    echo "Erreur depot : " . $e->getMessage() . "<br>";
+}
+////===============================> retirer  <==========================================////
+
+echo "<br>=== TEST RETRAIT SERVICE ===<br>";
+
+try {
+    $compteService->retirer(16, 50);
+
+    echo "Retrait effectue avec succes <br>";
+} catch (Exception $e) {
+    echo "Erreur retrait : " . $e->getMessage() . "<br>";
+}
+////===============================> historique  <==========================================////
+
+echo "<br>=== HISTORIQUE TRANSACTIONS SERVICE ===<br>";
+
+try {
+    $transactions = $compteService->historique(16);
+
+    foreach ($transactions as $t) {
+        echo $t->getType() . " | ";
+        echo $t->getAmount() . " DH | ";
+        echo $t->getCreatedAt()->format('Y-m-d H:i:s') . "<br>";
+    }
+} catch (Exception $e) {
+    echo "Erreur historique : " . $e->getMessage();
+}
+
+
 
 
